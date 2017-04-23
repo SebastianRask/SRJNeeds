@@ -156,6 +156,16 @@ public class SRJUtil {
 		return displayMetrics.heightPixels;
 	}
 
+	/**
+	 * Returns the width of the device screen
+	 */
+	public static int getScreenWidth(Context context) {
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		final DisplayMetrics displayMetrics = new DisplayMetrics();
+		wm.getDefaultDisplay().getMetrics(displayMetrics);
+		return displayMetrics.widthPixels;
+	}
+
 	public static boolean isDbSafe(SQLiteDatabase db) {
 		return db.isOpen() && !db.isReadOnly() && !db.isDbLockedByCurrentThread();
 	}

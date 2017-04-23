@@ -13,30 +13,24 @@ import java.util.List;
  * Created by Sebastian Rask on 18-04-2017.
  */
 
-public class SRJAdapter<E, VH extends SRJViewHolder<E>> extends RecyclerView.Adapter<VH>  {
-	@LayoutRes
-	protected int mLayout;
+public abstract class SRJAdapter<E, VH extends SRJViewHolder<E>> extends RecyclerView.Adapter<VH>  {
+
 	protected List<E> mItems;
-	protected ViewHolderFactory<VH> mViewHolderCreator;
 	protected ItemCallback<VH> mItemCallback;
 
-	public SRJAdapter(int mLayout, List<E> mItems, ViewHolderFactory<VH> mViewHolderCreator, ItemCallback<VH> mItemCallback) {
-		this.mLayout = mLayout;
+	public SRJAdapter(List<E> mItems, ItemCallback<VH> mItemCallback) {
 		this.mItems = mItems;
-		this.mViewHolderCreator = mViewHolderCreator;
 		this.mItemCallback = mItemCallback;
 	}
 
-	public SRJAdapter(int mLayout, ViewHolderFactory<VH> mViewHolderCreator) {
+	public SRJAdapter() {
 		this.mItems = new ArrayList<>();
-		this.mLayout = mLayout;
-		this.mViewHolderCreator = mViewHolderCreator;
 	}
 
 	@Override
 	public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-		View itemView = LayoutInflater.from(parent.getContext()).inflate(mLayout, parent, false);
-		return mViewHolderCreator.create(itemView);
+		View itemView = LayoutInflater.from(parent.getContext()).inflate(getLayoutResource(viewType), parent, false);
+		return getViewHolderCreator(viewType).create(itemView);
 	}
 
 	@Override
@@ -58,6 +52,10 @@ public class SRJAdapter<E, VH extends SRJViewHolder<E>> extends RecyclerView.Ada
 	public int getItemCount() {
 		return mItems == null ? 0 : mItems.size();
 	}
+
+	protected abstract @LayoutRes int getLayoutResource(int viewType);
+
+	protected abstract ViewHolderFactory<VH> getViewHolderCreator(int viewType);
 
 	public void addItem(E item, int position) {
 		mItems.add(position, item);
@@ -90,6 +88,10 @@ public class SRJAdapter<E, VH extends SRJViewHolder<E>> extends RecyclerView.Ada
 		notifyItemRemoved(position);
 		
 		return item;
+	}
+
+	public void setItemCallback(ItemCallback<VH> mItemCallback) {
+		this.mItemCallback = mItemCallback;
 	}
 
 	public interface ViewHolderFactory<VH> {
