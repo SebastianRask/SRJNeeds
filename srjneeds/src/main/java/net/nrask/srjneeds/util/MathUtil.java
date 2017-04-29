@@ -15,4 +15,8 @@ public class MathUtil {
 	public static float constrain(float min, float max, float v) {
 		return Math.max(min, Math.min(max, v));
 	}
+
+	public static int ensureRange(int value, int min, int max) {
+		return Math.min(Math.max(value, min), max);
+	}
 }

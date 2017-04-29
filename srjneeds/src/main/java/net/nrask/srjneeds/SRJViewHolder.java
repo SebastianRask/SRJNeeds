@@ -1,5 +1,6 @@
 package net.nrask.srjneeds;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -24,4 +25,8 @@ public abstract class SRJViewHolder<T> extends RecyclerView.ViewHolder {
 	}
 
 	protected abstract void onDataBinded(T data);
+
+	protected Context getContext() {
+		return itemView.getContext();
+	}
 }
