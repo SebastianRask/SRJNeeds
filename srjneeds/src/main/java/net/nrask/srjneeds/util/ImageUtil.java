@@ -60,6 +60,10 @@ public class ImageUtil {
 		return output;
 	}
 
+	public static Bitmap getRoundedBitmap(Bitmap bitmap) {
+		return getRoundedCornerBitmap(bitmap, (int) (Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0));
+	}
+
 	/**
 	 * Decodes a byte array to a bitmap and returns it.
 	 */
