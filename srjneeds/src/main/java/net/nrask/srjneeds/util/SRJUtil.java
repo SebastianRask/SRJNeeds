@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
@@ -24,6 +26,7 @@ import android.widget.ImageButton;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -34,6 +37,25 @@ import java.util.Calendar;
  */
 
 public class SRJUtil {
+	/**
+	 * Download bitmap from an URL. If the download fails, null is returned
+	 * @param src The path for the image.
+	 * @return
+	 */
+	public Bitmap getBitmapFromURL(String src) {
+		try {
+			java.net.URL url = new java.net.URL(src);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setDoInput(true);
+			connection.connect();
+			InputStream input = connection.getInputStream();
+			return BitmapFactory.decodeStream(input);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	/**
 	 * Checks if the device is connected to a valid network
 	 * Can be called on the UI thread
