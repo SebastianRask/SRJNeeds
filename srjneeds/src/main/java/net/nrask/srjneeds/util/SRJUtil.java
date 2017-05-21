@@ -42,7 +42,7 @@ public class SRJUtil {
 	 * @param src The path for the image.
 	 * @return
 	 */
-	public Bitmap getBitmapFromURL(String src) {
+	public static Bitmap getBitmapFromURL(String src) {
 		try {
 			java.net.URL url = new java.net.URL(src);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
